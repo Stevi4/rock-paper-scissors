@@ -85,10 +85,13 @@ function playRound() {
 
     case 1:
       console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
+      computerScore++;
       break;
 
     case 2:
       console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
+      humanScore++;
+      break;
   }
 }
 
