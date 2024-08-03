@@ -1,17 +1,21 @@
-// getComputerChoice returns a string picked randomly between "rock", "paper", or "scissors"
+// Variables to track scoring
+let humanScore = 0;
+let computerScore = 0;
+
+// getComputerChoice returns a string picked randomly between "Rock", "Paper", or "Scissors"
 function getComputerChoice() {
   // Call the random function to get a random number between 0 and 2
   // Select one of the 3 options based on the random number
 
   switch (random(3)) {
     case 0:
-      return "rock";
+      return "Rock";
 
     case 1:
-      return "paper";
+      return "Paper";
 
     case 2:
-      return "scissors";
+      return "Scissors";
   }
 }
 
@@ -21,31 +25,102 @@ function random(num) {
   return Math.floor(num);
 }
 
-// getHumanChoice will ask the user to input "rock", "paper", or "scissors" and returns their answer
+// getHumanChoice will ask the human to input "Rock", "Paper", or "Scissors" and returns their answer
 function getHumanChoice() {
   // Loop until a valid move is made
-  while(true) {
-    // Prompt the user to enter their move (case-insensitive)
+  while (true) {
+    // Prompt the human to enter their move (case-insensitive)
     let move = prompt("Rock, Paper, Scissors!\n");
-    move = move.toLowerCase();
+    move = capitalize(move);
 
     // Include shorthand moves (r, p, s) for easier typing
-    // If the move is not valid, alert the user
+    // If the move is not valid, alert the human
     switch (move) {
-      case "rock":
-      case "r":
-        return "rock";
+      case "Rock":
+      case "R":
+        return "Rock";
 
-      case "paper":
-      case "p":
-        return "paper";
+      case "Paper":
+      case "P":
+        return "Paper";
 
-      case "scissors":
-      case "s":
-        return "scissors";
+      case "Scissors":
+      case "S":
+        return "Scissors";
 
       default:
         alert("That's not a valid move!");
     }
+  }
+}
+
+// capitalize takes a string as input,
+// and returns a copy with the first letter capitalized and the rest in lowercase
+function capitalize(str) {
+  if (str.length === 1) {
+    return str.toUpperCase();
+  }
+  let first = str.substr(0, 1);
+  let rest = str.substr(1);
+
+  first = first.toUpperCase();
+  rest = rest.toLowerCase();
+
+  return first + rest;
+}
+
+// playRound plays a single round of Rock, Paper, Scissors, then increments the score count
+function playRound() {
+  // Get the moves from both the computer and the human
+  let computerChoice = getComputerChoice();
+  let humanChoice = getHumanChoice();
+
+  let result = determineWinner(computerChoice, humanChoice);
+
+  // Print a message of the results to the console log, and increment the winner's global score
+  switch (result) {
+    case 0:
+      console.log(`Double ${humanChoice}! It's a tie.`);
+      break;
+
+    case 1:
+      console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
+      break;
+
+    case 2:
+      console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
+  }
+}
+
+// determineWinner takes two valid Rock, Paper, Scissors moves and determines the result
+// 0 is returned on a tie, 1 is returned if the first move wins, and 2 is returned if the second move wins
+function determineWinner(move1, move2) {
+  switch (move1) {
+    case "Rock":
+      if (move2 === "Paper") {
+        return 2;
+      } else if (move2 === "Scissors") {
+        return 1;
+      } else {
+        return 0;
+      }
+
+    case "Paper":
+      if (move2 === "Scissors") {
+        return 2;
+      } else if (move2 === "Rock") {
+        return 1;
+      } else {
+        return 0;
+      }
+
+    case "Scissors":
+      if (move2 === "Rock") {
+        return 2;
+      } else if (move2 === "Paper") {
+        return 1;
+      } else {
+        return 0;
+      }
   }
 }
