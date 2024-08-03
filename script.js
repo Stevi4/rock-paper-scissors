@@ -1,7 +1,3 @@
-// Variables to track scoring
-let humanScore = 0;
-let computerScore = 0;
-
 // getComputerChoice returns a string picked randomly between "Rock", "Paper", or "Scissors"
 function getComputerChoice() {
   // Call the random function to get a random number between 0 and 2
@@ -30,8 +26,8 @@ function getHumanChoice() {
   // Loop until a valid move is made
   while (true) {
     // Prompt the human to enter their move (case-insensitive)
-    let move = prompt("Rock, Paper, Scissors!\n");
-    move = capitalize(move);
+    let move = prompt("Rock, Paper, Scissors!");
+    move = move ? capitalize(move) : move;
 
     // Include shorthand moves (r, p, s) for easier typing
     // If the move is not valid, alert the human
@@ -69,7 +65,7 @@ function capitalize(str) {
   return first + rest;
 }
 
-// playRound plays a single round of Rock, Paper, Scissors, then increments the score count
+// playRound plays a single round of Rock, Paper, Scissors, then returns a number representing the result
 function playRound() {
   // Get the moves from both the computer and the human
   let computerChoice = getComputerChoice();
@@ -84,15 +80,15 @@ function playRound() {
       break;
 
     case 1:
-      console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
-      computerScore++;
+      console.log(`I win! ${computerChoice} beats ${humanChoice}.`);
       break;
 
     case 2:
       console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
-      humanScore++;
       break;
   }
+
+  return result;
 }
 
 // determineWinner takes two valid Rock, Paper, Scissors moves and determines the result
@@ -125,5 +121,32 @@ function determineWinner(move1, move2) {
       } else {
         return 0;
       }
+  }
+}
+
+// playGame runs a best of 5 game of Rock, Paper, Scissors, and announces a winner.
+function playGame() {
+  // Variables to track scoring
+  let computerScore = 0;
+  let humanScore = 0;
+
+  console.log("Best of five.");
+
+  while (computerScore < 3 && humanScore < 3) {
+    switch (playRound()) {
+      case 1:
+        computerScore++;
+        break;
+        
+      case 2:
+        humanScore++;
+        break;
+    }
+  }
+
+  if (computerScore > humanScore) {
+    console.log("I win the game!");
+  } else {
+    console.log("You win the game!");
   }
 }
