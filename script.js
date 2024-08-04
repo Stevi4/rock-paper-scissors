@@ -1,4 +1,30 @@
-// getComputerChoice returns a string picked randomly between "Rock", "Paper", or "Scissors"
+// Plays a single round of Rock, Paper, Scissors, then returns a number representing the result
+function playRound() {
+  // Get the moves from both the computer and the human
+  let computerChoice = getComputerChoice();
+  let humanChoice = getHumanChoice();
+
+  let result = determineWinner(computerChoice, humanChoice);
+
+  // Print a message of the results to the console log, and increment the winner's global score
+  switch (result) {
+    case 0:
+      console.log(`Double ${humanChoice}! It's a tie.`);
+      break;
+
+    case 1:
+      console.log(`I win! ${computerChoice} beats ${humanChoice}.`);
+      break;
+
+    case 2:
+      console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
+      break;
+  }
+
+  return result;
+}
+
+// Returns a string picked randomly between "Rock", "Paper", or "Scissors"
 function getComputerChoice() {
   // Call the random function to get a random number between 0 and 2
   // Select one of the 3 options based on the random number
@@ -15,13 +41,7 @@ function getComputerChoice() {
   }
 }
 
-// random takes a number and returns a random whole number between 0 and (number - 1)
-function random(num) {
-  num *= Math.random();
-  return Math.floor(num);
-}
-
-// getHumanChoice will ask the human to input "Rock", "Paper", or "Scissors" and returns their answer
+// Asks the human to input "Rock", "Paper", or "Scissors" and returns their answer
 function getHumanChoice() {
   // Loop until a valid move is made
   while (true) {
@@ -50,48 +70,7 @@ function getHumanChoice() {
   }
 }
 
-// capitalize takes a string as input,
-// and returns a copy with the first letter capitalized and the rest in lowercase
-function capitalize(str) {
-  if (str.length === 1) {
-    return str.toUpperCase();
-  }
-  let first = str.substr(0, 1);
-  let rest = str.substr(1);
-
-  first = first.toUpperCase();
-  rest = rest.toLowerCase();
-
-  return first + rest;
-}
-
-// playRound plays a single round of Rock, Paper, Scissors, then returns a number representing the result
-function playRound() {
-  // Get the moves from both the computer and the human
-  let computerChoice = getComputerChoice();
-  let humanChoice = getHumanChoice();
-
-  let result = determineWinner(computerChoice, humanChoice);
-
-  // Print a message of the results to the console log, and increment the winner's global score
-  switch (result) {
-    case 0:
-      console.log(`Double ${humanChoice}! It's a tie.`);
-      break;
-
-    case 1:
-      console.log(`I win! ${computerChoice} beats ${humanChoice}.`);
-      break;
-
-    case 2:
-      console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
-      break;
-  }
-
-  return result;
-}
-
-// determineWinner takes two valid Rock, Paper, Scissors moves and determines the result
+// Takes two valid Rock, Paper, Scissors moves and determines the result
 // 0 is returned on a tie, 1 is returned if the first move wins, and 2 is returned if the second move wins
 function determineWinner(move1, move2) {
   switch (move1) {
@@ -124,29 +103,23 @@ function determineWinner(move1, move2) {
   }
 }
 
-// playGame runs a best of 5 game of Rock, Paper, Scissors, and announces a winner.
-function playGame() {
-  // Variables to track scoring
-  let computerScore = 0;
-  let humanScore = 0;
-
-  console.log("Best of five.");
-
-  while (computerScore < 3 && humanScore < 3) {
-    switch (playRound()) {
-      case 1:
-        computerScore++;
-        break;
-        
-      case 2:
-        humanScore++;
-        break;
-    }
-  }
-
-  if (computerScore > humanScore) {
-    console.log("I win the game!");
-  } else {
-    console.log("You win the game!");
-  }
+// Returns a random whole number between 0 and (number - 1)
+function random(num) {
+  num *= Math.random();
+  return Math.floor(num);
 }
+
+// Returns a copy of a string with only the first letter capitalized
+function capitalize(str) {
+  if (str.length === 1) {
+    return str.toUpperCase();
+  }
+  let first = str.substr(0, 1);
+  let rest = str.substr(1);
+
+  first = first.toUpperCase();
+  rest = rest.toLowerCase();
+
+  return first + rest;
+}
+
