@@ -1,16 +1,25 @@
+const body = document.querySelector("body");
+const humanScoreDisplay = document.querySelector("#humanScore");
+const computerScoreDisplay = document.querySelector("#computerScore");
+const message = document.querySelector("#message");
 const moves = document.querySelector("#moves");
-let message = document.querySelector("#message");
+const winMessage = document.querySelector("#winMessage");
+const replay = document.createElement("button");
+replay.textContent = "Replay?"
+
+let humanScore = 0;
+let computerScore = 0;
 
 moves.addEventListener("click", playRound);
+replay.addEventListener("click", replayGame);
 
 // Plays a single round of Rock, Paper, Scissors, then returns a number representing the result
 function playRound(event) {
-  if (event.target.tagName === "BUTTON") {
-    // Get the moves from both the computer and the human
-    let computerChoice = getComputerChoice();
+  if (event.target.tagName === "BUTTON" && humanScore < 5 && computerScore < 5) {
     let humanChoice = event.target.textContent;
+    let computerChoice = getComputerChoice();
 
-    let result = determineWinner(computerChoice, humanChoice);
+    let result = determineWinner(humanChoice, computerChoice);
 
     // Print a message of the results to the console log, and increment the winner's global score
     switch (result) {
@@ -19,14 +28,36 @@ function playRound(event) {
         break;
 
       case 1:
-        message.textContent = `I win! ${computerChoice} beats ${humanChoice}.`
+        message.textContent = `You win! ${humanChoice} beats ${computerChoice}.`
+        humanScore++;
+        humanScoreDisplay.textContent = `Your Score: ${humanScore}`;
         break;
 
       case 2:
-        message.textContent = `You win! ${humanChoice} beats ${computerChoice}.`
+        message.textContent = `I win! ${computerChoice} beats ${humanChoice}.`
+        computerScore++;
+        computerScoreDisplay.textContent = `My Score: ${computerScore}`;
         break;
     }
+    if (humanScore === 5) {
+      winMessage.textContent = "You win the game!";
+      body.appendChild(replay);
+    } else if (computerScore === 5) {
+      winMessage.textContent = "I win the game!";
+      body.appendChild(replay);
+    }
   }
+}
+
+// Resets score and messages to their original values
+function replayGame(){
+  humanScore = 0;
+  computerScore = 0;
+  humanScoreDisplay.textContent = "My Score: 0";
+  computerScoreDisplay.textContent = "My Score: 0";
+  message.textContent = "First to win 5 rounds wins the game.";
+  winMessage.textContent = "";
+  body.removeChild(replay);
 }
 
 // Returns a string picked randomly between "Rock", "Paper", or "Scissors"
@@ -43,35 +74,6 @@ function getComputerChoice() {
 
     case 2:
       return "Scissors";
-  }
-}
-
-// Asks the human to input "Rock", "Paper", or "Scissors" and returns their answer
-function getHumanChoice() {
-  // Loop until a valid move is made
-  while (true) {
-    // Prompt the human to enter their move (case-insensitive)
-    let move = prompt("Rock, Paper, Scissors!");
-    move = move ? capitalize(move) : move;
-
-    // Include shorthand moves (r, p, s) for easier typing
-    // If the move is not valid, alert the human
-    switch (move) {
-      case "Rock":
-      case "R":
-        return "Rock";
-
-      case "Paper":
-      case "P":
-        return "Paper";
-
-      case "Scissors":
-      case "S":
-        return "Scissors";
-
-      default:
-        alert("That's not a valid move!");
-    }
   }
 }
 
