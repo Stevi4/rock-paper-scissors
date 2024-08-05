@@ -1,4 +1,5 @@
 const moves = document.querySelector("#moves");
+let message = document.querySelector("#message");
 
 moves.addEventListener("click", playRound);
 
@@ -14,15 +15,15 @@ function playRound(event) {
     // Print a message of the results to the console log, and increment the winner's global score
     switch (result) {
       case 0:
-        console.log(`Double ${humanChoice}! It's a tie.`);
+        message.textContent = `Double ${humanChoice}! It's a tie.`
         break;
 
       case 1:
-        console.log(`I win! ${computerChoice} beats ${humanChoice}.`);
+        message.textContent = `I win! ${computerChoice} beats ${humanChoice}.`
         break;
 
       case 2:
-        console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
+        message.textContent = `You win! ${humanChoice} beats ${computerChoice}.`
         break;
     }
   }
