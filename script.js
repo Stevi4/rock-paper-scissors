@@ -1,27 +1,31 @@
+const moves = document.querySelector("#moves");
+
+moves.addEventListener("click", playRound);
+
 // Plays a single round of Rock, Paper, Scissors, then returns a number representing the result
-function playRound() {
-  // Get the moves from both the computer and the human
-  let computerChoice = getComputerChoice();
-  let humanChoice = getHumanChoice();
+function playRound(event) {
+  if (event.target.tagName === "BUTTON") {
+    // Get the moves from both the computer and the human
+    let computerChoice = getComputerChoice();
+    let humanChoice = event.target.textContent;
 
-  let result = determineWinner(computerChoice, humanChoice);
+    let result = determineWinner(computerChoice, humanChoice);
 
-  // Print a message of the results to the console log, and increment the winner's global score
-  switch (result) {
-    case 0:
-      console.log(`Double ${humanChoice}! It's a tie.`);
-      break;
+    // Print a message of the results to the console log, and increment the winner's global score
+    switch (result) {
+      case 0:
+        console.log(`Double ${humanChoice}! It's a tie.`);
+        break;
 
-    case 1:
-      console.log(`I win! ${computerChoice} beats ${humanChoice}.`);
-      break;
+      case 1:
+        console.log(`I win! ${computerChoice} beats ${humanChoice}.`);
+        break;
 
-    case 2:
-      console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
-      break;
+      case 2:
+        console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
+        break;
+    }
   }
-
-  return result;
 }
 
 // Returns a string picked randomly between "Rock", "Paper", or "Scissors"
@@ -122,4 +126,3 @@ function capitalize(str) {
 
   return first + rest;
 }
-
